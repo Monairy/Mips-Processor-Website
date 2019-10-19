@@ -74,5 +74,4 @@ while True:
     print R_Type_Conversion(a)
     if a == "quit":
         break
-    
-
+ 
