@@ -1,3 +1,4 @@
 cd C:\Modeltech_pe_edu_10.4a\examples
-vsim -c tbmips -do script
+#vlog aaa.v //compile
+vsim -c tbmips -do script //simulate and do script
 pause
