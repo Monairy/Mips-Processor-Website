@@ -65,12 +65,12 @@ def decimalToBinarySignExtend(n,nbits):
         return binary
 
 def is_Itype(instruction):
-   for i in I_Instuctions: 
-    if (i==instruction.split(' ')[0]):        
+   for i in I_Instuctions:
+    if (i==instruction.split()[0]):        
         return 1
     
 def I_Type_Conversion(instuction):
-    instParts=instuction.replace(',',' ').replace('(',' ').replace(')',' ').split()
+    instParts=instuction.replace(',',' ').replace('(',' ').replace(')',' ').split()  
     op=I_Op[instParts[0]]
     if(instParts[0]=='addi' or instParts[0]=='ori'): #addi ori
         rs=Registers[instParts[2]]
@@ -127,6 +127,7 @@ def jumps_conversion(instruction,lines):
 def main():
     assemblyfile = 'assembly.txt'
     binaryfile= 'binary.txt'
+    pcfile='PC.txt'
     binary=[]
     lines=[]
     lines2=[]
@@ -138,24 +139,49 @@ def main():
 
         for i in range(len(lines2)):
             if (":" in lines2[i]): #instruction without label
-               lines2[i]=lines2[i].rsplit(':')[1] #instruction without label
-            lines2[i]=lines2[i].replace('\n',' ') 
+                  lines2[i]=lines2[i].rsplit(':')[1] #instruction without label
+                  
+            lines2[i]=lines2[i].replace('\n',' ') .lower()
             instParts=lines2[i].replace(',',' ').split()
-            
+            print lines[i]
             if (is_Rtype(lines2[i])): ##Convert R Instructions
                binary.append(R_Type_Conversion(lines2[i]))
-
             elif (is_Itype(lines2[i])):  ##Convert I Instructions
                binary.append(I_Type_Conversion(lines2[i]))
             elif(instParts[0]=='beq' or instParts[0]=='bne'): ##Convert Branches
               binary.append(branches_conversion(i,lines2[i],lines))
             elif(instParts[0]=='j' or instParts[0]=='jal'): ##Convert Jumps
               binary.append(jumps_conversion(lines2[i],lines))
+              
 
     
-    with open(binaryfile,'w') as B:
+    with open(binaryfile,'w') as B: ###### Machine Code File
        for i in range(len(binary)):
-          B.write(str(binary[i])+'\n') 
-               
-   
+          B.write(str(binary[i])+'\n')
+          print binary[i]
+
+    with open (binaryfile,'r') as C: ###### PC COUNTER
+       linesofbinary=C.readlines()
+       with open(pcfile,'w') as D:
+          PC = (len(linesofbinary)-1)*4
+          D.write(str(PC))
+          
+
+
+print("""
+##################################################################
+@@       @@   @@@@  @@    @@  @@@@@@   @@   @@@@@@@    @@    @@
+@@ @   @ @@   @  @  @@ @  @@  @    @   @@   @@   @@    @@    @@
+@@   @   @@   @  @  @@  @ @@  @@@@@@   @@   @@@@@@        @@
+@@       @@   @@@@  @@    @@  @    @   @@   @@    @@      @@
+##################################################################
+
+MIPS ASSEMBLER
+All Rights Reserved to @AhmedElmonairy
+-------------------------------------------------------------------------------------------------------
+""")
+
+print ('Reading File of Assembly')
+print ('Converting to Machine Code..... \n')
+
 main()
