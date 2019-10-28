@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>MipsAssemblerByMonairy</title>
+<title>MIPS Processor</title>
 </head>
 <body>
 <pre>
 <div align="center">
-<font color="red"><h1>Welcome To Mips Assembler</h1></font>
+<font color="red"><h1>Welcome To Mips Processor</h1></font>
 <font color="Blue"><b>Enter Your Assembly here:<b></font>
 <form action="index.php" method="post">
 <textarea name="assembly" rows="10" cols="30"></textarea><br>
@@ -22,6 +22,30 @@ fclose($myfile);
 $output=exec('C:\Python27\python.exe assembler.py');
 echo file_get_contents("binary.txt");
 ?>
+<div id="first">
+<font color="Blue"><h1>Register File Contents:</h1></font>
+<?php
+exec("cmd /c script.bat");
+echo file_get_contents("_FromRegFile.txt");
+?>
+</div>
+<div id="second">
+<font color="Blue"><h1>DataMemory Contents:</h1></font>
+<?php echo file_get_contents("_FromDataMem.txt"); ?>
+</div>
+<font color="Blue"><h1>PC Final Value:</h1></font>
+<h1><?php echo file_get_contents("PC.txt"); ?></h1>
+
+
+<style>
+#first{
+float:left;
+}
+#second{
+float:right;
+}
+</style>
+
 </p>
 </body>
 </html>
