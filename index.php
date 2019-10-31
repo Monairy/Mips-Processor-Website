@@ -25,7 +25,7 @@ echo file_get_contents("binary.txt");
 <div id="first">
 <font color="Blue"><h1>Register File Contents:</h1></font>
 <?php
-exec("cmd /c script.bat");
+exec('script.bat');
 echo file_get_contents("_FromRegFile.txt");
 ?>
 </div>
