@@ -1,2 +1,2 @@
 vsim work.tbmips
-run
+run 100us
