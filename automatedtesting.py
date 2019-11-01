@@ -4,7 +4,6 @@ import subprocess
 import filecmp
 from termcolor import colored
 
-
 testcases='testcases/'
 InputToAssembler='assembly.txt'
 
@@ -26,9 +25,8 @@ for filename in listdir(testcases): #get all contents of testcases folder
         else:
             print "[+] testcase " + filename + colored(" RegFile",'yellow')+ " contents"+ colored(' failed','red')
             
-        mem_compare=filecmp.cmp('_FromRegFile.txt','testcases/DataMem_Output/'+filename) # compare datamemory files
+        mem_compare=filecmp.cmp('_FromDataMem.txt','testcases/DataMem_Output/'+filename) # compare datamemory files
         if (str(mem_compare)=="True"):
             print "[-] testcase " + filename + colored(" DataMem",'cyan')+ " contents" + colored(' succeeded','green')
         else:
             print "[-] testcase " + filename + colored(" DataMem",'cyan')+ " contents"+ colored(' failed','red')
-
