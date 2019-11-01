@@ -83,13 +83,13 @@ def I_Type_Conversion(instuction):
         immediate=decimalToBinarySignExtend(instParts[2],16)
         return op + rs + rt +immediate
 
-def findlabels(liness):
+def findlabels(liness): #takes all lines and return dic of labels:linenum
     LabelsDic={}
     linenumber=0
     lines2=liness[:]
     for i in range(len(lines2)):
         if (":" in lines2[i]):
-            lines2[i]=lines2[i][0:lines2[i].find(":")]
+            lines2[i]=lines2[i][0:lines2[i].find(":")].lower()
             LabelsDic[lines2[i]]=linenumber #integer of line number
         linenumber = linenumber + 1
     return LabelsDic
@@ -128,6 +128,7 @@ def main():
     assemblyfile = 'assembly.txt'
     binaryfile= 'binary.txt'
     pcfile='PC.txt'
+    toinstmemfile='_ToInstMem.txt'
     binary=[]
     lines=[]
     lines2=[]
@@ -138,12 +139,14 @@ def main():
 
 
         for i in range(len(lines2)):
-            if (":" in lines2[i]): #instruction without label
-                  lines2[i]=lines2[i].rsplit(':')[1] #instruction without label
-                  
+            if (":" in lines2[i]): #if inst starts with label > inst without label
+                  lines2[i]=lines2[i].rsplit(':')[1] #inst without label
+            
             lines2[i]=lines2[i].replace('\n',' ') .lower()
             instParts=lines2[i].replace(',',' ').split()
-            print lines[i]
+           # print lines[i]
+            if (len(lines[i].split())==1):
+             lines2[i]='sll $zero, $zero, 0' # for nop
             if (is_Rtype(lines2[i])): ##Convert R Instructions
                binary.append(R_Type_Conversion(lines2[i]))
             elif (is_Itype(lines2[i])):  ##Convert I Instructions
@@ -159,6 +162,10 @@ def main():
        for i in range(len(binary)):
           B.write(str(binary[i])+'\n')
           print binary[i]
+          
+     with open(toinstmemfile,'w') as D: ###### input to processor
+        for i in range(len(binary)):
+           D.write(str(binary[i])+'\n')      
 
     with open (binaryfile,'r') as C: ###### PC COUNTER
        linesofbinary=C.readlines()
@@ -166,7 +173,7 @@ def main():
           PC = (len(linesofbinary)-1)*4
           D.write(str(PC))
           
-
+  
 
 print("""
 ##################################################################
@@ -185,3 +192,4 @@ print ('Reading File of Assembly')
 print ('Converting to Machine Code..... \n')
 
 main()
+
