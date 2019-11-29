@@ -27,13 +27,13 @@ fclose($myfile);
 ?>
 <font color="Blue"><h1>Machine Code is:</h1></font>
 <?php 
-$output=exec('C:\Python27\python.exe assembler.py');
+$output=exec('python assembler.py');
 echo file_get_contents("binary.txt");
 ?>
 <div id="first">
 <font color="Blue"><h1>Register File Contents:</h1></font>
 <?php
-exec('script.bat');
+exec('Modelsim.bat');
 echo file_get_contents("_FromRegFile.txt");
 ?>
 </div>
