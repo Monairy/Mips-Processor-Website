@@ -10,7 +10,7 @@
 <b>
 <div id="first">
 <?php
-exec('C:\Python27\python.exe testing.py > testing.txt');
+exec('python AutomatedTesting.py > testing.txt');
 echo file_get_contents("testing.txt");
 ?>
 </div>
